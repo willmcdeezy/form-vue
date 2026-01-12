@@ -1,5 +1,7 @@
 <script setup lang="ts">
-console.log('Check out https://yatori.io/docs for more info!')
+defineOptions({
+  name: 'AboutView'
+})
 </script>
 
 <template>

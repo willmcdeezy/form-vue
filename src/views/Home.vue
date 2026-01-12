@@ -1,43 +1,28 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import 'yatori-checkout'
+import {  ref } from 'vue'
 
-const merchantWalletAddress = ref('')
-const merchantItemAmount = ref('')
-const isQrReady = ref(false)
-const qrKey = ref(0)
+defineOptions({
+  name: 'HomeView'
+})
 
-const displayConfirmation = (event: any) => {
-  console.log('Payment confirmed!', event.detail)
-  window.removeEventListener('yatori-confirmed', displayConfirmation)
+const name = ref('')
+const lastName = ref('McDonnell')
+
+const handleSubmit = () => {
+  console.log(name.value + ' ' + lastName.value)
 }
 
-const submitMerchantDetails = () => {
-  if (merchantItemAmount.value && merchantWalletAddress.value) {
-    window.addEventListener('yatori-confirmed', displayConfirmation)
-    isQrReady.value = true
-    qrKey.value++
-    console.log('QR CODE READY FOR PAYMENT')
-  }
-}
 </script>
 
 <template>
   <div class="container">
-    <h1>YATORI CHECKOUT DEMO</h1>
+    <h1>Form Demo Playground</h1>
 
-    <form @submit.prevent="submitMerchantDetails" class="form-wrapper">
-      <input v-model="merchantWalletAddress" />
-      <input v-model="merchantItemAmount" />
-      <button type="submit">Generate Qr code</button>
-    </form>
-
-    <yatori-checkout
-      v-if="isQrReady"
-      :key="qrKey"
-      :wallet="merchantWalletAddress"
-      :amount="merchantItemAmount"
-    />
+<form @submit.prevent="handleSubmit" class="form-wrapper">
+    <label for="name">Name</label>
+    <input type="text" id="name" v-model="name" />
+    <button type="submit">Submit</button>
+  </form>
   </div>
 </template>
 
