@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import 'yatori-checkout'
 
 const merchantWalletAddress = ref('')
@@ -9,12 +9,9 @@ const qrKey = ref(0)
 
 const displayConfirmation = (event: any) => {
   console.log('Payment confirmed!', event.detail)
-  window.removeEventListener('yatori-confirmed', displayConfirmation)
 }
-
 const submitMerchantDetails = () => {
   if (merchantItemAmount.value && merchantWalletAddress.value) {
-    window.addEventListener('yatori-confirmed', displayConfirmation)
     isQrReady.value = true
     qrKey.value++
     console.log('QR CODE READY FOR PAYMENT')
@@ -33,25 +30,27 @@ const submitMerchantDetails = () => {
     </form>
 
     <yatori-checkout
+      class="qr-code"
       v-if="isQrReady"
       :key="qrKey"
       :wallet="merchantWalletAddress"
       :amount="merchantItemAmount"
+      @yatori-confirmed="displayConfirmation"
     />
   </div>
 </template>
 
 <style lang="css">
 body {
-  background-color: #353535;
+  background-color: #f5f5f5;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #353535;
-  color: #ffff;
+  background-color: #f5f5f5;
+  color: #212121;
 }
 
 .form-wrapper {
@@ -59,5 +58,9 @@ body {
   flex-direction: column;
   gap: 15px;
   min-width: 40%;
+}
+
+.qr-code {
+  padding: 20px;
 }
 </style>
