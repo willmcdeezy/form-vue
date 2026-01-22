@@ -19,7 +19,7 @@
   "dependencies": {
     "vue": "^3.5.26",
     "vue-router": "^4.6.4",
-    "yatori-checkout": "^0.1.2"
+    "yatori-checkout": "^0.1.5"
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.3",
